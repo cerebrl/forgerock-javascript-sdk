@@ -39,6 +39,7 @@ abstract class FRUser {
       const currentUser = await UserManager.getCurrentUser();
       return currentUser as T;
     } catch (error) {
+      console.error('test', error);
       throw new Error('Login failed');
     }
   }
