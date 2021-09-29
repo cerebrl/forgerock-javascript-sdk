@@ -63,10 +63,13 @@ abstract class Auth {
   }
 
   private static configureRequest(step?: Step): RequestInit {
+    const { serverConfig } = Config.get();
+    const sessionCookieName = serverConfig.sessionCookieName || 'iPlanetDirectoryPro';
+    const sessionCookieValue = window.localStorage.getItem(sessionCookieName) || '';
     const init: RequestInit = {
       body: step ? JSON.stringify(step) : undefined,
-      credentials: 'include',
       headers: {
+        [sessionCookieName]: sessionCookieValue,
         accept: 'application/json',
         'accept-api-version': 'protocol=1.0,resource=2.1',
         'content-type': 'application/json',

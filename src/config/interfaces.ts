@@ -63,6 +63,7 @@ interface RequestObj {
 interface ServerConfig {
   baseUrl: string;
   paths?: CustomPathConfig;
+  sessionCookieName?: string;
   timeout: number;
 }
 

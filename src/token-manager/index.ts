@@ -131,9 +131,13 @@ abstract class TokenManager {
       } else {
         // Using modern `fetch` provides better redirect and error handling
         // Downside is IE11 is not supported, *even* with the fetch polyfill
+        const sessionCookieName = serverConfig.sessionCookieName || 'iPlanetDirectoryPro';
+        const sessionCookieValue = localStorage.getItem(sessionCookieName) || '';
         const response = await withTimeout(
-          fetch(authorizeUrl, {
-            credentials: 'include',
+          fetch(`${authorizeUrl}`, {
+            headers: {
+              [sessionCookieName]: sessionCookieValue,
+            },
             mode: 'cors',
           }),
           serverConfig.timeout,

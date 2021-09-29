@@ -216,7 +216,6 @@ abstract class OAuth2Client {
 
     const init: RequestInit = {
       body: stringify({ client_id: clientId, token: accessToken }),
-      credentials: 'include',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
       method: 'POST',
     };
@@ -255,7 +254,6 @@ abstract class OAuth2Client {
 
     if (includeToken) {
       const { accessToken } = await TokenStorage.get();
-      init.credentials = 'include';
       init.headers = (init.headers || new Headers()) as Headers;
       init.headers.set('authorization', `Bearer ${accessToken}`);
     }

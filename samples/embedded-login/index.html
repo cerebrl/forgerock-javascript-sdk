@@ -60,15 +60,17 @@
     const FATAL = 'Fatal';
 
     forgerock.Config.set({
-      clientId: '<Your OAuth Client>', // e.g. 'ForgeRockSDKClient'
-      redirectUri: '<Your Redirect/Callback URL>', // e.g. 'https://sdkapp.example.com:8443/_callback'
-      scope: '<Your OAuth Scopes>', // e.g. 'openid profile me.read'
-      serverConfig: {
-        baseUrl: '<Your AM URL>', // e.g. 'https://openam.example.com:9443/openam/'
-        timeout: '<Your Timeout (milliseconds)>' // 90000 or less
+      clientId: 'SDKOAuthClient', // e.g. 'ForgeRockSDKClient'
+      redirectUri: 'https://sdkapp.example.com:8443/embedded-login/', // e.g. 'https://sdkapp.example.com:8443/central-login/'
+      scope: 'openid profile me.read', // e.g. 'openid profile me.read'
+        serverConfig: {
+        baseUrl: 'https://nightly.eng.forgeops.com/am/', // e.g. 'https://openam.example.com:9443/openam/'
+        // sessionCookieName: 'e1babb394ea5130',
+        timeout: 9000 // 90000 or less
       },
-      realmPath: '<Your Realm>', // e.g. 'root'
-      tree: '<Your Auth Tree>', // e.g. 'Login'
+      support: 'modern', // e.g. 'legacy' or 'modern'
+      realmPath: 'root', // e.g. 'root'
+      tree: 'Login', // e.g. 'Login'
     });
 
     // Define custom handlers to render and submit each expected step

@@ -46,14 +46,17 @@
     tree,
     serverConfig: {
       baseUrl: amUrl,
+      sessionCookieName: 'e1babb394ea5130',
     },
+    support: 'modern',
+    tokenStore: 'localStorage',
   });
 
-  try {
-    forgerock.SessionManager.logout();
-  } catch (err) {
-    // Do nothing
-  }
+  // try {
+  //   forgerock.SessionManager.logout();
+  // } catch (err) {
+  //   // Do nothing
+  // }
 
   console.log('Initiate first step with `undefined`');
   rxjs
@@ -97,42 +100,42 @@
           return tokens;
         },
       ),
-      rxjs.operators.delay(delay),
-      rxMergeMap(
-        (tokens) => {
-          console.log('Force renew OAuth tokens');
-          return forgerock.TokenManager.getTokens({ forceRenew: true });
-        },
-        (oldTokens, newTokens) => {
-          if (oldTokens.accessToken !== newTokens.accessToken) {
-            console.log('New OAuth tokens retrieved');
-          } else {
-            throw new Error('Force_Renew_Error');
-          }
-          return newTokens;
-        },
-      ),
+      // rxjs.operators.delay(delay),
+      // rxMergeMap(
+      //   (tokens) => {
+      //     console.log('Force renew OAuth tokens');
+      //     return forgerock.TokenManager.getTokens({ forceRenew: true });
+      //   },
+      //   (oldTokens, newTokens) => {
+      //     if (oldTokens.accessToken !== newTokens.accessToken) {
+      //       console.log('New OAuth tokens retrieved');
+      //     } else {
+      //       throw new Error('Force_Renew_Error');
+      //     }
+      //     return newTokens;
+      //   },
+      // ),
       rxjs.operators.delay(delay),
       rxMergeMap(() => {
         console.log('Initiate logout');
         return forgerock.FRUser.logout();
       }),
-      rxjs.operators.delay(delay),
-      rxMergeMap(
-        (step) => {
-          return forgerock.TokenStorage.get();
-        },
-        (step, tokens) => {
-          if (!tokens) {
-            console.log('Logout successful');
-            document.body.innerHTML = '<p class="Logged_Out">Logout successful</p>';
-          } else {
-            throw new Error('Logout_Error');
-          }
-          return step;
-        },
-      ),
-      rxjs.operators.delay(delay),
+      // rxjs.operators.delay(delay),
+      // rxMergeMap(
+      //   (step) => {
+      //     return forgerock.TokenStorage.get();
+      //   },
+      //   (step, tokens) => {
+      //     if (!tokens) {
+      //       console.log('Logout successful');
+      //       document.body.innerHTML = '<p class="Logged_Out">Logout successful</p>';
+      //     } else {
+      //       throw new Error('Logout_Error');
+      //     }
+      //     return step;
+      //   },
+      // ),
+      // rxjs.operators.delay(delay),
       rxTap(
         () => {},
         (err) => {
