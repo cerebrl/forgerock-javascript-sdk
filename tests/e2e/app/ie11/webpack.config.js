@@ -45,7 +45,7 @@ module.exports = {
       // The environment supports ECMAScript Module syntax (import ... from '...').
       module: false,
     },
-    filename: 'ie-bundle.js',
+    filename: 'ie11-bundle.js',
     path: path.resolve(__dirname, ''),
   },
 };

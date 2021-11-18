@@ -68,8 +68,8 @@ if (!window.crypto && window.msCrypto) {
 /**
  * Configure your user, your base environment config, registration tree and login tree
  */
-const un = 'f9022889-4452-48a0-aa94-182436645551';
-const pw = 'password';
+const un = '0b4ed558-210b-40da-bb3f-9d4f2428c694';
+const pw = 'Password1!';
 const email = 'sally.tester@me.com';
 const loginTree = 'Login'; // Login tree after registration
 
@@ -77,11 +77,11 @@ console.log('Configure the SDK');
 forgerock.Config.set({
   clientId: 'WebOAuthClient',
   redirectUri: 'https://sdkapp.example.com:8443/_callback/',
-  realmPath: 'root',
-  scope: 'openid profile me.read',
+  realmPath: 'alpha',
+  scope: 'openid profile email',
   tree: 'Registration', // Don't forget to config your login tree above
   serverConfig: {
-    baseUrl: 'https://default.forgeops.petrov.ca/am/',
+    baseUrl: 'https://openam-crbrl-01.forgeblocks.com/am/',
   },
 });
 
@@ -128,17 +128,17 @@ forgerock.Config.set({
   const [kbCb1, kbCb2] = step.getCallbacksOfType('KbaCreateCallback');
 
   console.log(`Prompt 7: ${kbCb1.getPrompt()}`);
-  console.log(`Prompt 8: ${kbCb2.getPrompt()}`);
+  // console.log(`Prompt 8: ${kbCb2.getPrompt()}`);
 
   const [pdq1, pdq2] = kbCb1.getPredefinedQuestions();
   console.log(`Predefined Question1: ${pdq1}`);
-  console.log(`Predefined Question 2: ${pdq2}`);
+  // console.log(`Predefined Question 2: ${pdq2}`);
 
   kbCb1.setQuestion('What is your favorite color?');
   kbCb1.setAnswer('Red');
 
-  kbCb2.setQuestion('Who was your first employer?');
-  kbCb2.setAnswer('AAA Engineering');
+  // kbCb2.setQuestion('Who was your first employer?');
+  // kbCb2.setAnswer('AAA Engineering');
 
   console.log('Handle TermsAndConditionsCallback');
   const tcCb = step.getCallbackOfType('TermsAndConditionsCallback');
@@ -182,7 +182,7 @@ forgerock.Config.set({
   step.getCallbackOfType('PasswordCallback').setPassword(pw);
   step = await forgerock.FRAuth.next(step);
 
-  if (!step.payload.status) {
+  if (step.payload.status) {
     console.log('Auth tree successfully completed');
   } else {
     throw new Error('Auth_Error');
