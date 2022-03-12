@@ -138,12 +138,17 @@ abstract class TokenManager {
          * Another downside is IE11 is not supported, *even* with the fetch polyfill.
          */
 
+        const sessionCookieName = serverConfig.sessionCookieName || 'iPlanetDirectoryPro';
+        const sessionCookieValue = localStorage.getItem(sessionCookieName) || '';
+
         // authorizeUrl has already been processed, but passing this in for consistency
         const runMiddleware = middlewareWrapper(
           {
             url: new URL(authorizeUrl),
             init: {
-              credentials: 'include',
+              headers: new Headers({
+                [sessionCookieName]: sessionCookieValue,
+              }),
               mode: 'cors',
             },
           },

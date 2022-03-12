@@ -8,6 +8,7 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+import Config from '../config';
 import { Step } from '../auth/interfaces';
 import { StepType } from './enums';
 import { AuthResponse } from './interfaces';
@@ -21,7 +22,11 @@ class FRLoginSuccess implements AuthResponse {
   /**
    * @param payload The raw payload returned by OpenAM
    */
-  constructor(public payload: Step) {}
+  constructor(public payload: Step) {
+    const { serverConfig } = Config.get();
+    const sessionCookieName = serverConfig.sessionCookieName || 'iPlanetDirectoryPro';
+    window.localStorage.setItem(sessionCookieName, payload.tokenId || '');
+  }
 
   /**
    * Gets the step's realm.

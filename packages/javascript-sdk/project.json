@@ -28,6 +28,9 @@
         "rollupConfig": "packages/javascript-sdk/rollup.config.js"
       },
       "configurations": {
+        "watch": {
+          "watch": true
+        },
         "production": {}
       },
       "outputs": ["{options.outputPath}"]

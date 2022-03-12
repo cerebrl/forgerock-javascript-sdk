@@ -25,10 +25,11 @@ abstract class SessionManager {
    */
   public static async logout(options?: ConfigOptions): Promise<Response> {
     const { middleware, realmPath, serverConfig } = Config.get(options);
+    const sessionCookieName = serverConfig.sessionCookieName || 'iPlanetDirectoryPro';
+    const sessionCookieValue = window.localStorage.getItem(sessionCookieName) || '';
     const init: RequestInit = {
-      credentials: 'include',
       headers: new Headers({
-        'accept-api-version': 'protocol=1.0,resource=2.0',
+        [sessionCookieName]: sessionCookieValue,
         'x-requested-with': REQUESTED_WITH,
       }),
       method: 'POST',
@@ -43,6 +44,9 @@ abstract class SessionManager {
     );
     const req = runMiddleware(middleware);
     const response = await withTimeout(fetch(req.url.toString(), req.init), serverConfig.timeout);
+
+    window.localStorage.removeItem(sessionCookieName);
+
     if (!isOkOr4xx(response)) {
       throw new Error(`Failed to log out; received ${response.status}`);
     }

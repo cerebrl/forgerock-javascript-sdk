@@ -15,7 +15,7 @@
     "lint": "nx affected --target=lint",
     "prepublishOnly": "npm run clean && npm i && npm run build && npm t",
     "start:e2e": "nx run autoscript-apps:serve",
-    "start:samples": "ws -d samples -p 8443 --cors.origin null --cors.credentials --https",
+    "start:samples": "ws -d samples -p 8443 --cors.origin '*' --https",
     "start:server": "nx run mock-api:serve",
     "start:server:live": "NODE_ENV=LIVE nx run mock-api:serve:live",
     "test": "npm run test:unit -- --skipNxCache && npm run test:integration -- --skipNxCache && npm run test:e2e -- --skipNxCache",
