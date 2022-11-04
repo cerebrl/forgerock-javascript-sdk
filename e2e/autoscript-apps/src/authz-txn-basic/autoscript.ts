@@ -39,13 +39,10 @@ function autoscript() {
             }
             break;
           case 'AUTHENTICATE':
-            if (
-              action.payload.type === 'composite_advice' &&
-              typeof action.payload.tree === 'string'
-            ) {
-              console.log('Continuing authentication with composite advice');
-            }
-            break;
+            let origin = req.url.origin;
+            let path = req.url.pathname;
+            req.url = new URL(origin + path);
+            debugger;
         }
         next();
       },
@@ -93,6 +90,7 @@ function autoscript() {
             init: {
               method: 'GET',
               credentials: 'include',
+              headers: new Headers({ 'X-ForgeRock-SDK': 'true' }),
             },
             authorization: {
               handleStep: async (step) => {
@@ -121,6 +119,7 @@ function autoscript() {
             init: {
               method: 'GET',
               credentials: 'include',
+              headers: new Headers({ 'X-ForgeRock-SDK': 'true' }),
             },
             authorization: {
               handleStep: async (step) => {

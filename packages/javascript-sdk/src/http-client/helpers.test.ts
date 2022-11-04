@@ -12,6 +12,7 @@ import {
   buildAuthzOptions,
   examineForIGAuthz,
   examineForRESTAuthz,
+  getAdvicesFromHeader,
   normalizeIGJSON,
 } from './helpers';
 import {
@@ -61,6 +62,13 @@ describe('Test HttpClient utils', () => {
   it('examines response for REST auth by txn', async () => {
     const output = await examineForRESTAuthz(authzByTxnResFromREST);
     expect(output).toBe(true);
+  });
+
+  it('gets advices out of www-authenticate header', () => {
+    const output = getAdvicesFromHeader(
+      'ForgeRock realm="/",advices="eyJBdXRoZW50aWNhdGVUb1NlcnZpY2VDb25kaXRpb25BZHZpY2UiOlsiLzpFeGFtcGxlIl19",am_uri="https://iam.example.com/am/",format_hint="1"',
+    );
+    expect(output).toStrictEqual({ AuthenticateToServiceConditionAdvice: ['/:Example'] });
   });
 
   it('normalizes authz by tree from IG redirect to JSON', async () => {

@@ -28,11 +28,13 @@ import {
   addAuthzInfoToURL,
   buildAuthzOptions,
   examineForIGAuthz,
+  examineForIGAuthzHeader,
   examineForRESTAuthz,
   hasAuthzAdvice,
   isAuthzStep,
-  newTokenRequired,
+  // newTokenRequired,
   normalizeIGJSON,
+  normalizeNewIGJSON,
   normalizeRESTJSON,
 } from './helpers';
 import middlewareWrapper from '../util/middleware';
@@ -70,12 +72,15 @@ abstract class HttpClient extends Dispatcher {
     let authorizationJSON: AuthorizationJSON | undefined;
     let hasIG = false;
 
-    if (newTokenRequired(res, options.requiresNewToken)) {
-      res = await this._request(options, true);
-    }
+    // if (newTokenRequired(res, options.requiresNewToken)) {
+    //   res = await this._request(options, true);
+    // }
 
     if (options.authorization && options.authorization.handleStep) {
-      if (res.redirected && examineForIGAuthz(res)) {
+      if (res.status === 401 && examineForIGAuthzHeader(res)) {
+        hasIG = true;
+        authorizationJSON = normalizeNewIGJSON(res);
+      } else if (res.redirected && examineForIGAuthz(res)) {
         hasIG = true;
         authorizationJSON = normalizeIGJSON(res);
       } else if (await examineForRESTAuthz(res)) {
@@ -118,7 +123,7 @@ abstract class HttpClient extends Dispatcher {
         }
 
         // Walk through auth tree
-        await this.stepIterator(initialStep, options.authorization.handleStep, type, tree);
+        await this.stepIterator(initialStep, options.authorization.handleStep);
         // See if OAuth tokens are being used
         let tokens;
         try {
@@ -170,8 +175,8 @@ abstract class HttpClient extends Dispatcher {
   private static async stepIterator(
     res: Response,
     handleStep: HandleStep,
-    type: string,
-    tree: string,
+    // type: string,
+    // tree: string,
   ): Promise<void> {
     const jsonRes = await res.json();
     const initialStep = new FRStep(jsonRes);
@@ -180,7 +185,7 @@ abstract class HttpClient extends Dispatcher {
     return new Promise(async (resolve, reject) => {
       async function handleNext(step: FRStep): Promise<void> {
         const input = await handleStep(step);
-        const output = await FRAuth.next(input, { type, tree });
+        const output = await FRAuth.next(input);
 
         if (output.type === StepType.LoginSuccess) {
           resolve();
