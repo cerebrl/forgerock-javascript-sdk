@@ -19,6 +19,7 @@
     "start:e2e": "nx run-many --target=serve --projects=autoscript-apps,mock-api --configuration=development",
     "start:embedded-login": "nx serve embedded-login",
     "start:central-login": "nx serve central-login",
+    "start:reactjs-login": "nx run-many --target=serve --projects=reactjs-login,todo-api",
     "start:reactjs-todo": "nx run-many --target=serve --projects=reactjs-todo,todo-api",
     "start:angular-todo": "nx run angular-todo:config && nx run-many --target=serve --projects=angular-todo,todo-api",
     "start:server": "nx run mock-api:serve",

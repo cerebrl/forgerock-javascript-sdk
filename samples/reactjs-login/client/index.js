@@ -40,14 +40,13 @@ import './styles/index.scss';
 if (DEBUGGER) debugger;
 Config.set({
   clientId: WEB_OAUTH_CLIENT,
-  login: 'redirect',
-  realmPath: REALM_PATH,
-  redirectUri: `${window.location.origin}/login`,
+  redirectUri: `${window.location.origin}/callback`,
   scope: 'openid profile email',
   serverConfig: {
     baseUrl: AM_URL,
     timeout: '5000',
   },
+  realmPath: REALM_PATH,
   tree: JOURNEY_LOGIN,
 });
 

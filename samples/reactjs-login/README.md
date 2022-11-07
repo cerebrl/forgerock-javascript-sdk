@@ -1,4 +1,4 @@
-# React JS Todo Sample App
+# React JS Login Sample App
 
 ## Disclaimers
 
@@ -20,15 +20,10 @@ Once you have the 5 requirements above met, we can build the project.
 
 #### Configure CORS
 
-1. Allowed origins: `https://react.example.com:8443`
+1. Allowed origins: `https://react.login.example.com:8443`
 2. Allowed methods: `GET` `POST`
 3. Allowed headers: `Content-Type` `X-Requested-With` `Accept-API-Version` `Authorization`
 4. Allow credentials: enable
-
-#### Create Your OAuth Clients
-
-1. Create a public (SPA) OAuth client for the web app: no secret, scopes of `openid profile email`, implicit consent enabled, and no "token authentication endpoint method".
-2. Create a confidential (Node.js) OAuth client for the API server: with a secret, default scope of `am-introspect-all-tokens`, and `client_secret_basic` as the "token authentication endpoint method".
 
 #### Create your Authentication Journeys/Trees
 
@@ -74,7 +69,7 @@ npm install
 
 # run sample app project
 # only if you want to see the app build, the serve command will do this for you
-npm run build:reactjs-todo
+npm run build:reactjs-login
 ```
 
 ### Update Your `/etc/hosts` File
@@ -96,10 +91,10 @@ Now, run the below commands to start the processes needed for building the appli
 
 ```sh
 # In one terminal window, run the following watch command
-npm run start:reactjs-todo
+npm run start:reactjs-login
 ```
 
-Now, you should be able to visit `https://react.example.com:8443`, which is your web app or client (the Relying Party in OAuth terms). This client will make requests to your AM instance, (the Authorization Server in OAuth terms), which will be running on whatever domain you set, and `https://api.example.com:9443` as the REST API for your todos (the Resource Server).
+Now, you should be able to visit `https://react.login.example.com:8443`, which is your web app or client (the Relying Party in OAuth terms). This client will make requests to your AM instance, (the Authorization Server in OAuth terms), which will be running on whatever domain you set, and `https://api.example.com:9443` as the REST API for your todos (the Resource Server).
 
 ### Accept Cert Exceptions
 

@@ -1,0 +1,76 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "samples/reactjs-login/client",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/samples/reactjs-login",
+        "index": "samples/reactjs-login/public/index.html",
+        "main": "samples/reactjs-login/client/index.js",
+        "tsConfig": "samples/reactjs-login/tsconfig.app.json",
+        "webpackConfig": "samples/reactjs-login/webpack.config.js",
+        "stylePreprocessorOptions": {
+          "includePaths": ["samples/reactjs-login/public", "samples/reactjs-login/client"]
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "optimization": true,
+          "watch": false,
+          "vendorChunk": true,
+          "webpackConfig": "samples/reactjs-login/webpack.config.js",
+          "outputPath": "dist/samples/reactjs-login",
+          "index": "samples/reactjs-login/public/index.html",
+          "main": "samples/reactjs-login/client/index.js",
+          "tsConfig": "samples/reactjs-login/tsconfig.app.json"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {},
+      "configurations": {
+        "development": {
+          "buildTarget": "reactjs-login:build",
+          "host": "react.login.example.com",
+          "port": 7443,
+          "open": true,
+          "ssl": true,
+          "watch": true
+        },
+        "production": {
+          "watch": false,
+          "port": 8443,
+          "buildTarget": "reactjs-login:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/samples/reactjs-login"],
+      "options": {
+        "jestConfig": "samples/reactjs-login/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "integration": {}
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["samples/reactjs-login/**/*.js"],
+        "fix": true,
+        "ignorePath": ".gitignore"
+      }
+    }
+  }
+}

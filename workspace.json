@@ -8,6 +8,7 @@
     "embedded-login": "samples/embedded-login",
     "javascript-sdk": "packages/javascript-sdk",
     "mock-api": "e2e/mock-api",
+    "reactjs-login": "samples/reactjs-login",
     "reactjs-todo": "samples/reactjs-todo",
     "todo-api": "samples/todo-api"
   },
