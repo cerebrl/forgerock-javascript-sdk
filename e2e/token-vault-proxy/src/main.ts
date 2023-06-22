@@ -8,10 +8,10 @@ proxy({
   forgerock: {
     clientId: 'CentralLoginOAuthClient',
     oauthThreshold: 5000,
-    realmPath: 'alpha',
+    realmPath: 'root',
     scope: 'openid profile me.read',
     serverConfig: {
-      baseUrl: 'https://auth.example.com:9443/am',
+      baseUrl: 'https://localhost:9443/am',
     },
   },
 });

@@ -45,7 +45,7 @@ Config.set({
   redirectUri: `${window.location.origin}`,
   scope: 'openid profile me.read',
   serverConfig: {
-    baseUrl: 'https://auth.example.com:9443/am',
+    baseUrl: 'https://localhost:9443/am',
     timeout: 5000,
   },
   realmPath: 'root',
@@ -114,7 +114,6 @@ const res = await (async () => {
 })();
 if (res.hasTokens) {
   loggedInEl.innerText = 'true';
-  hasTokensEl.innerText = 'true';
 }
 
 /** ****************************************************

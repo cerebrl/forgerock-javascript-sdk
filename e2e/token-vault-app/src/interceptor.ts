@@ -7,7 +7,7 @@ interceptor({
   },
   forgerock: {
     serverConfig: {
-      baseUrl: 'https://auth.example.com:9443/am',
+      baseUrl: 'https://localhost:9443/am',
     },
     realmPath: 'root',
   },
